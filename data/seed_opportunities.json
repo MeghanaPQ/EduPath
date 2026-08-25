@@ -1,0 +1,1256 @@
+[
+  {
+    "id": "in-chevening-2027",
+    "title": "Chevening Scholarship (UK Master's) — India",
+    "provider": "UK Foreign, Commonwealth & Development Office",
+    "opportunity_type": "scholarship",
+    "description": "Fully funded one-year master's scholarship in the UK for emerging leaders. Applications for the current cycle are open for Indian citizens. Apply only on the official Chevening online application system.",
+    "amount": null,
+    "currency": "GBP",
+    "deadline": "2026-10-06",
+    "application_start_date": "2026-08-04",
+    "location": "United Kingdom",
+    "eligibility_text": "Indian citizens with an undergraduate degree and at least two years' work experience. Must apply to three eligible UK master's courses. Confirm full criteria on chevening.org.",
+    "required_documents": [
+      "passport",
+      "transcript",
+      "resume",
+      "sop",
+      "recommendation_letters"
+    ],
+    "official_source_url": "https://www.chevening.org/scholarship/india/",
+    "application_url": "https://www.chevening.org/apply/",
+    "source_name": "Chevening",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "masters"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "fields": []
+    }
+  },
+  {
+    "id": "in-nsp-students-portal",
+    "title": "National Scholarship Portal — Apply / Status (Central & State Schemes)",
+    "provider": "Government of India (NSP)",
+    "opportunity_type": "scholarship",
+    "description": "Official student portal for Central and State schemes on NSP. Complete One Time Registration (OTR) with Aadhaar, then apply or check status for eligible schemes when the academic-year window is open. Scheme deadlines vary — always confirm on the portal before applying.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "Indian students meeting scheme-specific criteria. OTR via Aadhaar is required before scholarship applications.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "transcript",
+      "bank_passbook",
+      "passport_photo"
+    ],
+    "official_source_url": "https://scholarships.gov.in/Students",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "National Scholarship Portal (NSP)",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "phd",
+        "diploma",
+        "school"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ]
+    }
+  },
+  {
+    "id": "in-nsp-otr",
+    "title": "NSP One Time Registration (OTR)",
+    "provider": "Government of India (NSP)",
+    "opportunity_type": "scholarship",
+    "description": "Create your NSP One Time Registration (OTR) with Aadhaar / EID. OTR is required before you can apply for scholarships on scholarships.gov.in.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": null,
+    "application_start_date": null,
+    "location": "India",
+    "eligibility_text": "Indian students who need an OTR number to apply on the National Scholarship Portal.",
+    "required_documents": [
+      "aadhaar"
+    ],
+    "official_source_url": "https://scholarships.gov.in/Students",
+    "application_url": "https://scholarships.gov.in/otrapplication/#/login-page",
+    "source_name": "National Scholarship Portal (NSP)",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "phd",
+        "diploma",
+        "school"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ]
+    }
+  },
+  {
+    "id": "in-pm-usp-csss",
+    "title": "PM-USP Central Sector Scheme of Scholarship (CSSS)",
+    "provider": "Ministry of Education / NSP",
+    "opportunity_type": "scholarship",
+    "description": "Merit-based Central Sector Scheme for college and university students, applied through NSP. Confirm current-year board rank/income criteria on the portal, then submit via Apply for Scholarship.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "Indian college/university students meeting NSP CSSS merit and income criteria.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "transcript",
+      "bank_passbook",
+      "passport_photo"
+    ],
+    "official_source_url": "https://scholarships.gov.in/Students",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "National Scholarship Portal (NSP)",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "maximum_income": 800000
+    }
+  },
+  {
+    "id": "in-post-matric-sc",
+    "title": "Post-Matric Scholarship for SC Students",
+    "provider": "Ministry of Social Justice & Empowerment / NSP",
+    "opportunity_type": "scholarship",
+    "description": "Post-Matric scholarship support for eligible Scheduled Caste students. Apply through NSP Application Form when the scheme window is open for your state.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "SC category students in post-matric courses in India. Category certificate and income proof typically required.",
+    "required_documents": [
+      "aadhaar",
+      "caste_certificate",
+      "income_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://scholarships.gov.in/Students",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "National Scholarship Portal (NSP)",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "phd",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "category": [
+        "SC"
+      ]
+    }
+  },
+  {
+    "id": "in-nsp-st",
+    "title": "Post-Matric / Higher Education Scholarship for ST Students",
+    "provider": "Ministry of Tribal Affairs / NSP",
+    "opportunity_type": "scholarship",
+    "description": "Scholarship support for eligible Scheduled Tribe students via NSP. Verify the exact scheme name and state rules on the student portal, then apply online.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "ST category students meeting scheme criteria. Confirm on scholarships.gov.in.",
+    "required_documents": [
+      "aadhaar",
+      "caste_certificate",
+      "income_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://scholarships.gov.in/Students",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "National Scholarship Portal (NSP)",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "phd",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "category": [
+        "ST"
+      ]
+    }
+  },
+  {
+    "id": "in-merit-cum-means-minority",
+    "title": "Merit-cum-Means Scholarship for Minority Students",
+    "provider": "Ministry of Minority Affairs / NSP",
+    "opportunity_type": "scholarship",
+    "description": "Scholarship for students from notified minority communities in technical/professional courses. Apply through NSP Application Form.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "Students from notified minority communities meeting merit and means criteria.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "transcript",
+      "bank_passbook",
+      "community_certificate"
+    ],
+    "official_source_url": "https://scholarships.gov.in/Students",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "National Scholarship Portal (NSP)",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ]
+    }
+  },
+  {
+    "id": "in-aicte-pragati",
+    "title": "AICTE Pragati Scholarship for Girl Students",
+    "provider": "AICTE / NSP",
+    "opportunity_type": "scholarship",
+    "description": "Scholarship for girl students in AICTE-approved degree/diploma programmes. Applications are submitted on the National Scholarship Portal (not the AICTE homepage).",
+    "amount": 50000,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "Girl students admitted to AICTE-approved technical degree/diploma programmes meeting income norms. Confirm guidelines on AICTE, apply on NSP.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "transcript",
+      "bank_passbook",
+      "passport_photo"
+    ],
+    "official_source_url": "https://www.aicte-india.org/schemes/students-development-schemes",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "AICTE via NSP",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "fields": [
+        "engineering",
+        "technology"
+      ],
+      "gender": [
+        "female",
+        "girl",
+        "woman"
+      ]
+    }
+  },
+  {
+    "id": "in-aicte-saksham",
+    "title": "AICTE Saksham Scholarship for Specially-Abled Students",
+    "provider": "AICTE / NSP",
+    "opportunity_type": "scholarship",
+    "description": "Scholarship for specially-abled students in AICTE-approved programmes. Apply on the National Scholarship Portal Application Form.",
+    "amount": 50000,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "Specially-abled students (typically ≥40% disability) in AICTE-approved technical programmes meeting income norms.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "disability_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://www.aicte-india.org/schemes/students-development-schemes",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "AICTE via NSP",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "fields": [
+        "engineering",
+        "technology"
+      ]
+    }
+  },
+  {
+    "id": "in-inspire-she",
+    "title": "INSPIRE Scholarship for Higher Education (SHE)",
+    "provider": "Department of Science & Technology (DST)",
+    "opportunity_type": "scholarship",
+    "description": "DST INSPIRE-SHE supports talented students in basic and natural sciences. Apply only via the official INSPIRE online portal when a call is open.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-12-31",
+    "application_start_date": "2026-07-01",
+    "location": "India",
+    "eligibility_text": "Students pursuing basic/natural sciences at UG/early PG level meeting INSPIRE merit criteria. Verify current call on online-inspire.gov.in.",
+    "required_documents": [
+      "aadhaar",
+      "transcript",
+      "bank_passbook",
+      "passport_photo"
+    ],
+    "official_source_url": "https://www.online-inspire.gov.in/",
+    "application_url": "https://www.online-inspire.gov.in/",
+    "source_name": "INSPIRE (DST)",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "fields": [
+        "science",
+        "physics",
+        "chemistry",
+        "mathematics",
+        "biology"
+      ]
+    }
+  },
+  {
+    "id": "in-pmrf",
+    "title": "Prime Minister's Research Fellowship (PMRF)",
+    "provider": "Ministry of Education",
+    "opportunity_type": "fellowship",
+    "description": "Fellowship for PhD research at selected Indian institutions. Use the official PMRF portal for lateral/direct entry routes when applications are open.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-11-30",
+    "application_start_date": "2026-08-01",
+    "location": "India",
+    "eligibility_text": "Candidates for PhD at PMRF-granting institutions meeting GATE/CGPA and discipline criteria. Confirm open cycles on pmrf.in.",
+    "required_documents": [
+      "transcript",
+      "resume",
+      "sop",
+      "recommendation_letters"
+    ],
+    "official_source_url": "https://www.pmrf.in/",
+    "application_url": "https://www.pmrf.in/",
+    "source_name": "PMRF",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "phd"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "fields": [
+        "engineering",
+        "science",
+        "technology"
+      ]
+    }
+  },
+  {
+    "id": "in-usief-fulbright-nehru",
+    "title": "Fulbright-Nehru Master's Fellowships",
+    "provider": "USIEF / Fulbright",
+    "opportunity_type": "fellowship",
+    "description": "Fulbright-Nehru Master's Fellowships for Indian citizens to pursue a master's degree in the United States. Apply only through the official USIEF Fulbright application system when the cycle is open.",
+    "amount": null,
+    "currency": "USD",
+    "deadline": "2026-05-15",
+    "application_start_date": "2026-02-01",
+    "location": "United States",
+    "eligibility_text": "Indian citizens with a bachelor's degree and relevant experience. Confirm the open award cycle and field list on usief.org.in.",
+    "required_documents": [
+      "passport",
+      "transcript",
+      "resume",
+      "sop",
+      "recommendation_letters",
+      "toe_fl"
+    ],
+    "official_source_url": "https://www.usief.org.in/Fellowships/Fulbright-Nehru-Master-Fellowships.aspx",
+    "application_url": "https://www.usief.org.in/Fellowships/Fulbright-Nehru-Master-Fellowships.aspx",
+    "source_name": "USIEF",
+    "source_verified": true,
+    "status": "closed",
+    "eligibility": {
+      "education_level": [
+        "masters"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ]
+    }
+  },
+  {
+    "id": "in-reliance-foundation",
+    "title": "Reliance Foundation Undergraduate Scholarships",
+    "provider": "Reliance Foundation",
+    "opportunity_type": "scholarship",
+    "description": "Merit-based scholarships for undergraduate students across India. Apply on the official Reliance Foundation scholarships portal when the window is open.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-15",
+    "application_start_date": "2026-07-01",
+    "location": "India",
+    "eligibility_text": "First-year undergraduate students meeting Reliance Foundation academic and income criteria. Verify on the official scholarships site.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "transcript",
+      "bank_passbook",
+      "passport_photo"
+    ],
+    "official_source_url": "https://www.reliancefoundation.org/scholarships",
+    "application_url": "https://www.scholarship.reliancefoundation.org/",
+    "source_name": "Reliance Foundation",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ]
+    }
+  },
+  {
+    "id": "in-jntata-endowment",
+    "title": "JN Tata Endowment Loan Scholarship",
+    "provider": "JN Tata Endowment",
+    "opportunity_type": "scholarship",
+    "description": "Loan scholarship for Indian nationals pursuing higher education abroad. Apply through the official endowment application process when the cycle opens.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-03-15",
+    "application_start_date": "2026-01-01",
+    "location": "Abroad",
+    "eligibility_text": "Indian nationals selected on merit for postgraduate study abroad. Confirm cycle dates on jntataendowment.org.",
+    "required_documents": [
+      "passport",
+      "transcript",
+      "resume",
+      "sop",
+      "admission_offer"
+    ],
+    "official_source_url": "https://www.jntataendowment.org/",
+    "application_url": "https://www.jntataendowment.org/",
+    "source_name": "JN Tata Endowment",
+    "source_verified": true,
+    "status": "closed",
+    "eligibility": {
+      "education_level": [
+        "masters",
+        "phd"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ]
+    }
+  },
+  {
+    "id": "in-inlaks",
+    "title": "Inlaks Shivdasani Foundation Scholarships",
+    "provider": "Inlaks Shivdasani Foundation",
+    "opportunity_type": "scholarship",
+    "description": "Scholarships for exceptional Indian students for postgraduate study. Apply only through the official Inlaks application portal when applications are open.",
+    "amount": null,
+    "currency": "USD",
+    "deadline": "2026-03-30",
+    "application_start_date": "2026-01-15",
+    "location": "Abroad",
+    "eligibility_text": "Indian citizens under the foundation age limit with admission/strong academic record. Confirm open cycle on inlaksfoundation.org.",
+    "required_documents": [
+      "passport",
+      "transcript",
+      "resume",
+      "sop",
+      "recommendation_letters"
+    ],
+    "official_source_url": "https://www.inlaksfoundation.org/scholarships/",
+    "application_url": "https://www.inlaksfoundation.org/scholarships/",
+    "source_name": "Inlaks Foundation",
+    "source_verified": true,
+    "status": "closed",
+    "eligibility": {
+      "education_level": [
+        "masters"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ]
+    }
+  },
+  {
+    "id": "in-british-council-ielts",
+    "title": "British Council IELTS Prize / Study UK guidance",
+    "provider": "British Council India",
+    "opportunity_type": "scholarship",
+    "description": "British Council India lists currently open Study UK / IELTS-related awards on this page. Only apply to awards that show an open Apply button and deadline — ignore expired campaigns.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-12-31",
+    "application_start_date": "2026-01-01",
+    "location": "United Kingdom",
+    "eligibility_text": "Varies by award. Check the live British Council India scholarships page for open competitions.",
+    "required_documents": [
+      "passport",
+      "transcript",
+      "ielts_score"
+    ],
+    "official_source_url": "https://www.britishcouncil.in/study-uk/scholarships",
+    "application_url": "https://www.britishcouncil.in/study-uk/scholarships",
+    "source_name": "British Council India",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ]
+    }
+  },
+  {
+    "id": "in-digital-gujarat",
+    "title": "Digital Gujarat Scholarship Portal (State Schemes)",
+    "provider": "Government of Gujarat",
+    "opportunity_type": "scholarship",
+    "description": "Official Gujarat state scholarship portal for multiple state schemes. Students at Gujarat colleges (e.g. Parul University) apply here when the annual window is open.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-07-01",
+    "location": "Gujarat, India",
+    "eligibility_text": "Students studying in Gujarat meeting scheme-specific caste/income/merit rules.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "caste_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://www.digitalgujarat.gov.in/",
+    "application_url": "https://www.digitalgujarat.gov.in/",
+    "source_name": "Digital Gujarat",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "diploma",
+        "school"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "states": [
+        "gujarat",
+        "gj"
+      ]
+    }
+  },
+  {
+    "id": "in-mysy-gujarat",
+    "title": "Mukhyamantri Yuva Swavalamban Yojana (MYSY) — Gujarat",
+    "provider": "Government of Gujarat",
+    "opportunity_type": "scholarship",
+    "description": "Gujarat state merit-cum-means support scheme. Apply via official MYSY when open.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-07-01",
+    "location": "Gujarat, India",
+    "eligibility_text": "Gujarat domicile students meeting MYSY merit and income criteria.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://mysy.guj.nic.in/",
+    "application_url": "https://mysy.guj.nic.in/",
+    "source_name": "MYSY Gujarat",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "states": [
+        "gujarat",
+        "gj"
+      ]
+    }
+  },
+  {
+    "id": "in-mahadbt",
+    "title": "MahaDBT — Maharashtra State Scholarships",
+    "provider": "Government of Maharashtra",
+    "opportunity_type": "scholarship",
+    "description": "Official Maharashtra DBT portal for multiple state scholarship schemes.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-07-01",
+    "location": "Maharashtra, India",
+    "eligibility_text": "Maharashtra domicile / studying-in-state students as per each scheme.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "caste_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://mahadbt.maharashtra.gov.in/",
+    "application_url": "https://mahadbt.maharashtra.gov.in/",
+    "source_name": "MahaDBT",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "diploma",
+        "school"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "states": [
+        "maharashtra",
+        "mh"
+      ]
+    }
+  },
+  {
+    "id": "in-egrantz-kerala",
+    "title": "e-Grantz — Kerala Post-Matric Scholarships",
+    "provider": "Government of Kerala",
+    "opportunity_type": "scholarship",
+    "description": "Kerala official e-Grantz portal for post-matric scholarships.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-11-30",
+    "application_start_date": "2026-07-01",
+    "location": "Kerala, India",
+    "eligibility_text": "Kerala students meeting community/income criteria for e-Grantz.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "caste_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://www.egrantz.kerala.gov.in/",
+    "application_url": "https://www.egrantz.kerala.gov.in/",
+    "source_name": "e-Grantz Kerala",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "states": [
+        "kerala",
+        "kl"
+      ]
+    }
+  },
+  {
+    "id": "in-epass-telangana",
+    "title": "Telangana ePASS Scholarships",
+    "provider": "Government of Telangana",
+    "opportunity_type": "scholarship",
+    "description": "Official Telangana ePASS portal for post-matric scholarships.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-07-01",
+    "location": "Telangana, India",
+    "eligibility_text": "Telangana students meeting ePASS caste/income criteria.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "caste_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://telanganaepass.cgg.gov.in/",
+    "application_url": "https://telanganaepass.cgg.gov.in/",
+    "source_name": "Telangana ePASS",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "states": [
+        "telangana",
+        "ts"
+      ]
+    }
+  },
+  {
+    "id": "in-epass-ap",
+    "title": "Andhra Pradesh Jnanabhumi Scholarships",
+    "provider": "Government of Andhra Pradesh",
+    "opportunity_type": "scholarship",
+    "description": "Official AP Jnanabhumi scholarship services for post-matric / fee reimbursement.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-07-01",
+    "location": "Andhra Pradesh, India",
+    "eligibility_text": "Andhra Pradesh students meeting Jnanabhumi scheme rules.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "caste_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://jnanabhumi.ap.gov.in/",
+    "application_url": "https://jnanabhumi.ap.gov.in/",
+    "source_name": "Jnanabhumi AP",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "states": [
+        "andhra pradesh",
+        "ap"
+      ]
+    }
+  },
+  {
+    "id": "in-ssp-karnataka",
+    "title": "State Scholarship Portal (SSP) — Karnataka",
+    "provider": "Government of Karnataka",
+    "opportunity_type": "scholarship",
+    "description": "Karnataka SSP for post-matric and related schemes.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-07-01",
+    "location": "Karnataka, India",
+    "eligibility_text": "Karnataka students meeting SSP scheme eligibility.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "caste_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://ssp.postmatric.karnataka.gov.in/",
+    "application_url": "https://ssp.postmatric.karnataka.gov.in/",
+    "source_name": "SSP Karnataka",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "states": [
+        "karnataka",
+        "ka"
+      ]
+    }
+  },
+  {
+    "id": "in-up-scholarship",
+    "title": "UP Scholarship Portal",
+    "provider": "Government of Uttar Pradesh",
+    "opportunity_type": "scholarship",
+    "description": "Official Uttar Pradesh scholarship portal for pre/post-matric schemes.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-12-31",
+    "application_start_date": "2026-07-01",
+    "location": "Uttar Pradesh, India",
+    "eligibility_text": "UP domicile students meeting scheme criteria.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "caste_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://scholarship.up.gov.in/",
+    "application_url": "https://scholarship.up.gov.in/",
+    "source_name": "UP Scholarship",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "diploma",
+        "school"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "states": [
+        "uttar pradesh",
+        "up"
+      ]
+    }
+  },
+  {
+    "id": "in-mp-scholarship",
+    "title": "MP Scholarship Portal",
+    "provider": "Government of Madhya Pradesh",
+    "opportunity_type": "scholarship",
+    "description": "Madhya Pradesh official scholarship portal.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-07-01",
+    "location": "Madhya Pradesh, India",
+    "eligibility_text": "MP students meeting portal scheme eligibility.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "caste_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://scholarshipportal.mp.nic.in/",
+    "application_url": "https://scholarshipportal.mp.nic.in/",
+    "source_name": "MP Scholarship Portal",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "states": [
+        "madhya pradesh",
+        "mp"
+      ]
+    }
+  },
+  {
+    "id": "in-wb-oasis",
+    "title": "OASIS — West Bengal Scholarships",
+    "provider": "Government of West Bengal",
+    "opportunity_type": "scholarship",
+    "description": "Official OASIS portal for West Bengal scholarships.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-11-30",
+    "application_start_date": "2026-07-01",
+    "location": "West Bengal, India",
+    "eligibility_text": "West Bengal students meeting OASIS scheme rules.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "caste_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://oasis.gov.in/",
+    "application_url": "https://oasis.gov.in/",
+    "source_name": "OASIS WB",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "states": [
+        "west bengal",
+        "wb"
+      ]
+    }
+  },
+  {
+    "id": "in-aicte-swanath",
+    "title": "AICTE Swanath Scholarship",
+    "provider": "AICTE / NSP",
+    "opportunity_type": "scholarship",
+    "description": "AICTE Swanath for eligible special-category students in AICTE-approved programmes. Apply via NSP.",
+    "amount": 50000,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "Students in AICTE-approved programmes meeting Swanath criteria.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://www.aicte-india.org/schemes/students-development-schemes",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "AICTE via NSP",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "diploma"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "fields": [
+        "engineering",
+        "technology"
+      ]
+    }
+  },
+  {
+    "id": "in-aicte-pg-scholarship",
+    "title": "AICTE PG Scholarship (GATE/GPAT)",
+    "provider": "AICTE",
+    "opportunity_type": "scholarship",
+    "description": "PG scholarship support for GATE/GPAT qualified students in AICTE-approved programmes.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "GATE/GPAT qualified PG students in AICTE-approved institutions.",
+    "required_documents": [
+      "aadhaar",
+      "gate_scorecard",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://www.aicte-india.org/schemes/students-development-schemes",
+    "application_url": "https://www.aicte-india.org/schemes/students-development-schemes",
+    "source_name": "AICTE",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "masters"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "fields": [
+        "engineering",
+        "technology",
+        "pharmacy"
+      ]
+    }
+  },
+  {
+    "id": "in-top-class-sc",
+    "title": "Top Class Education Scheme for SC Students",
+    "provider": "Ministry of Social Justice / NSP",
+    "opportunity_type": "scholarship",
+    "description": "Central scheme for SC students in notified top-class institutions via NSP.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "SC students admitted to notified institutions meeting income criteria.",
+    "required_documents": [
+      "aadhaar",
+      "caste_certificate",
+      "income_certificate",
+      "transcript",
+      "admission_letter"
+    ],
+    "official_source_url": "https://scholarships.gov.in/Students",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "NSP",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "category": [
+        "SC"
+      ]
+    }
+  },
+  {
+    "id": "in-sitaram-jindal",
+    "title": "Sitaram Jindal Foundation Scholarship",
+    "provider": "Sitaram Jindal Foundation",
+    "opportunity_type": "scholarship",
+    "description": "Merit-cum-means scholarship. Apply on the official foundation scholarship page when open.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-12-31",
+    "application_start_date": "2026-01-01",
+    "location": "India",
+    "eligibility_text": "Indian students meeting foundation academic and income criteria.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://www.sitaramjindalfoundation.org/",
+    "application_url": "https://www.sitaramjindalfoundation.org/scholarships.html",
+    "source_name": "Sitaram Jindal Foundation",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "bachelors",
+        "masters",
+        "diploma",
+        "school"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ]
+    }
+  },
+  {
+    "id": "in-csir-jrf",
+    "title": "CSIR-UGC NET JRF / Research Fellowships",
+    "provider": "CSIR-HRDG",
+    "opportunity_type": "fellowship",
+    "description": "Research fellowships for NET-qualified candidates via official CSIR HRDG.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-12-31",
+    "application_start_date": "2026-01-01",
+    "location": "India",
+    "eligibility_text": "Candidates with CSIR-UGC NET / equivalent as notified.",
+    "required_documents": [
+      "transcript",
+      "resume",
+      "research_proposal"
+    ],
+    "official_source_url": "https://csirhrdg.res.in/",
+    "application_url": "https://csirhrdg.res.in/",
+    "source_name": "CSIR-HRDG",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "masters",
+        "phd"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "fields": [
+        "science",
+        "engineering",
+        "technology"
+      ]
+    }
+  },
+  {
+    "id": "in-begum-hazrat-mahal",
+    "title": "Begum Hazrat Mahal National Scholarship",
+    "provider": "Maulana Azad Education Foundation / NSP",
+    "opportunity_type": "scholarship",
+    "description": "Scholarship for girl students from minority communities via NSP when listed.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "Girl students from notified minority communities.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "community_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://scholarships.gov.in/Students",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "NSP",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "school",
+        "bachelors"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ],
+      "gender": [
+        "female",
+        "girl",
+        "woman"
+      ]
+    }
+  },
+  {
+    "id": "in-prematric-minority",
+    "title": "Pre-Matric Scholarship for Minorities",
+    "provider": "Ministry of Minority Affairs / NSP",
+    "opportunity_type": "scholarship",
+    "description": "Central pre-matric scholarship for minority communities via NSP.",
+    "amount": null,
+    "currency": "INR",
+    "deadline": "2026-10-31",
+    "application_start_date": "2026-06-01",
+    "location": "India",
+    "eligibility_text": "Minority community school students meeting income criteria.",
+    "required_documents": [
+      "aadhaar",
+      "income_certificate",
+      "community_certificate",
+      "transcript",
+      "bank_passbook"
+    ],
+    "official_source_url": "https://scholarships.gov.in/Students",
+    "application_url": "https://scholarships.gov.in/ApplicationForm",
+    "source_name": "NSP",
+    "source_verified": true,
+    "status": "open",
+    "eligibility": {
+      "education_level": [
+        "school"
+      ],
+      "countries": [
+        "IN",
+        "India"
+      ]
+    }
+  }
+]
