@@ -94,6 +94,8 @@ def build_edupath_mcp_server(
                     "deadline": str(opp.deadline) if opp and opp.deadline else None,
                     "official_source_url": opp.official_source_url if opp else None,
                     "application_url": opp.application_url if opp else None,
+                    "source_verified": bool(opp and opp.source_verified),
+                    "last_verified_at": str(opp.last_verified_at) if opp and opp.last_verified_at else None,
                     "eligibility_status": row.eligibility_status,
                     "eligibility_score": row.eligibility_score,
                     "ranking_score": row.ranking_score,
@@ -242,6 +244,8 @@ def build_edupath_mcp_server(
             "official_source_url": opp.official_source_url if opp else None,
             "application_url": opp.application_url if opp else None,
             "deadline": str(opp.deadline) if opp and opp.deadline else None,
+            "source_verified": bool(opp and opp.source_verified),
+            "last_verified_at": str(opp.last_verified_at) if opp and opp.last_verified_at else None,
         }
 
     server.register(

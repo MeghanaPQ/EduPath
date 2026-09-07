@@ -37,7 +37,6 @@ def seed_database(db: Session) -> dict:
         db.commit()
 
     seeds = load_seed_opportunities()
-    seed_ids = {seed["id"] for seed in seeds}
     today = date.today()
 
     for seed in seeds:
@@ -91,11 +90,8 @@ def seed_database(db: Session) -> dict:
                     )
                 )
 
-    # Remove catalog rows that are no longer in the verified seed (clears outdated 2024 hubs)
-    orphans = db.query(Opportunity).filter(~Opportunity.id.in_(seed_ids)).all()
-    for opp in orphans:
-        _delete_opportunity_graph(db, opp)
-        created["removed_stale"] += 1
+    # Keep live listings discovered from trusted sources across restarts.
+    # Seed rows are still updated above, and expired rows are closed below.
 
     db.commit()
     created["closed_expired"] = close_expired_opportunities(db, today)

@@ -135,6 +135,36 @@ class PolicyAgent:
                 )
                 continue
 
+            tool_meta = next((tool for tool in tools if tool["name"] == tool_name), {})
+            annotations = tool_meta.get("annotations") or {}
+            if annotations.get("requiresConfirmation"):
+                requires_confirmation = True
+                confirmation_prompt = (
+                    f"Confirmation is required before running the {tool_name} action."
+                )
+                observations.append(
+                    {
+                        "tool": tool_name,
+                        "arguments": arguments,
+                        "observation": {
+                            "ok": False,
+                            "error": "Tool call requires explicit user confirmation.",
+                        },
+                    }
+                )
+                trace.append(
+                    {
+                        "phase": "confirmation_gate",
+                        "step": step_idx,
+                        "tool": tool_name,
+                        "status": "requires_confirmation",
+                    }
+                )
+                agent_logger.append_step(
+                    db, run, f"Confirmation required for MCP tool `{tool_name}`", status="warning"
+                )
+                break
+
             result = client.call_tool(tool_name, arguments)
             obs = result.as_observation()
             observations.append(
@@ -157,13 +187,6 @@ class PolicyAgent:
                 data={"ok": obs.get("ok"), "error": obs.get("error")},
             )
 
-            # Side-effect confirmation hint
-            tool_meta = next((t for t in tools if t["name"] == tool_name), {})
-            if (tool_meta.get("annotations") or {}).get("sideEffect") and tool_name in {
-                "search_opportunities",
-                "check_deadlines",
-            }:
-                requires_confirmation = False  # discovery/deadlines are allowed agent side effects
         else:
             # max iterations hit
             draft = self._synthesize_fallback(message, observations)

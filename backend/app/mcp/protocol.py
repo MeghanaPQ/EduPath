@@ -18,6 +18,7 @@ class ToolSpec:
     input_schema: dict[str, Any]
     output_schema: dict[str, Any] = field(default_factory=dict)
     side_effect: bool = False
+    requires_confirmation: bool = False
 
 
 @dataclass
@@ -52,6 +53,7 @@ class MCPToolServer:
         *,
         output_schema: Optional[dict[str, Any]] = None,
         side_effect: bool = False,
+        requires_confirmation: bool = False,
     ) -> Callable[[ToolHandler], ToolHandler]:
         def decorator(fn: ToolHandler) -> ToolHandler:
             self._tools[name] = ToolSpec(
@@ -60,6 +62,7 @@ class MCPToolServer:
                 input_schema=input_schema,
                 output_schema=output_schema or {"type": "object"},
                 side_effect=side_effect,
+                requires_confirmation=requires_confirmation,
             )
             self._handlers[name] = fn
             return fn
@@ -74,12 +77,14 @@ class MCPToolServer:
         handler: ToolHandler,
         *,
         side_effect: bool = False,
+        requires_confirmation: bool = False,
     ) -> None:
         self._tools[name] = ToolSpec(
             name=name,
             description=description,
             input_schema=input_schema,
             side_effect=side_effect,
+            requires_confirmation=requires_confirmation,
         )
         self._handlers[name] = handler
 
@@ -93,7 +98,10 @@ class MCPToolServer:
                     "description": spec.description,
                     "inputSchema": spec.input_schema,
                     "outputSchema": spec.output_schema,
-                    "annotations": {"sideEffect": spec.side_effect},
+                    "annotations": {
+                        "sideEffect": spec.side_effect,
+                        "requiresConfirmation": spec.requires_confirmation,
+                    },
                 }
             )
         return out

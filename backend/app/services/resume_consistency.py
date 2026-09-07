@@ -250,8 +250,8 @@ def check_document_profile_consistency(
     document_text: str,
 ) -> dict[str, Any]:
     """
-    Validate ANY upload against the logged-in student's profile.
-    Blocks wrong-person documents when identity fields contradict the profile.
+    Validate uploads against profile details without requiring a matching name.
+    Blocks documents when non-name profile fields contradict the profile.
     """
     dtype = (document_type or "other").lower().replace(" ", "_")
     text = (document_text or "").strip()
@@ -296,47 +296,12 @@ def check_document_profile_consistency(
         }
 
     extracted = extract_document_identity(text, dtype)
-    profile_name = (user.name or "").strip()
     profile_email = (user.email or "").strip().lower()
     institution = (profile.institution if profile else None) or ""
     degree = (profile.degree if profile else None) or (profile.education_level if profile else None) or ""
     category = (profile.category if profile else None) or ""
     state = (profile.state if profile else None) or ""
     field = (profile.field_of_study if profile else None) or ""
-
-    # --- NAME: must match if document states a person name ---
-    names = list(extracted.get("names_found") or [])
-    if extracted.get("name") and extracted["name"] not in names:
-        names.insert(0, extracted["name"])
-
-    if profile_name and names:
-        best = max(name_similarity(profile_name, n) for n in names)
-        # Also allow profile name tokens to appear anywhere in the document
-        blob_hit = name_similarity(profile_name, text[:3000])
-        score = max(best, blob_hit)
-        if score < 0.34:
-            shown = names[0]
-            mismatches.append(
-                f"Document name “{shown}” does not match your account name “{profile_name}”. "
-                "Upload YOUR documents only — not another person’s."
-            )
-        elif score < 0.55:
-            warnings.append(
-                f"Document name only partially matches “{profile_name}”. Confirm this file is yours."
-            )
-    elif profile_name and dtype in IDENTITY_DOC_TYPES and dtype != "other":
-        # No explicit name extracted — require profile name tokens to appear in text
-        if name_similarity(profile_name, text[:4000]) < 0.34 and len(_tokens(profile_name)) >= 2:
-            # Many bank/income PDFs bury the name; only warn unless it's an ID-like doc
-            if dtype in {"aadhaar", "passport", "id", "resume", "caste_certificate", "community_certificate"}:
-                mismatches.append(
-                    f"Could not find your name “{profile_name}” on this {dtype.replace('_', ' ')}. "
-                    "Rejecting possible wrong-person document."
-                )
-            else:
-                warnings.append(
-                    f"Your name “{profile_name}” was not clearly found on this {dtype.replace('_', ' ')}."
-                )
 
     # --- EMAIL ---
     doc_email = (extracted.get("email") or "").strip().lower()

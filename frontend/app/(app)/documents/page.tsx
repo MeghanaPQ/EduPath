@@ -131,7 +131,7 @@ export default function DocumentsPage() {
     <>
       <PageHeader
         title="Document Vault"
-        subtitle="Every upload is checked against your profile — name, college, degree, category, and state must match yours."
+        subtitle="File names can be anything. Uploads are checked against your profile details when those details are present."
         action={
           <Button onClick={() => fileRef.current?.click()} loading={uploading}>
             <Upload className="w-4 h-4" />

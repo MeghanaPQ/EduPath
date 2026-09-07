@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Optional
 from urllib.parse import urlparse
@@ -18,6 +20,40 @@ from app.utils.ids import new_id
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
+
+
+class _VisibleTextParser(HTMLParser):
+    _IGNORED_TAGS = {"script", "style", "noscript", "template", "svg"}
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self._ignored_depth = 0
+        self.parts: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, Optional[str]]]) -> None:
+        if tag.lower() in self._IGNORED_TAGS:
+            self._ignored_depth += 1
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() in self._IGNORED_TAGS and self._ignored_depth:
+            self._ignored_depth -= 1
+
+    def handle_data(self, data: str) -> None:
+        if not self._ignored_depth:
+            self.parts.append(data)
+
+
+def sanitize_content_for_llm(content: str, max_length: int = 8_000) -> str:
+    """Convert fetched HTML to bounded visible text before model extraction."""
+    parser = _VisibleTextParser()
+    try:
+        parser.feed(content)
+        parser.close()
+        visible_text = " ".join(parser.parts)
+    except Exception:  # noqa: BLE001
+        visible_text = content
+    visible_text = re.sub(r"\s+", " ", visible_text).strip()
+    return visible_text[:max_length]
 
 
 def load_trusted_sources() -> list[dict[str, Any]]:
@@ -50,10 +86,12 @@ def robots_allows(url: str, user_agent: str = "EduPathBot") -> bool:
 
 def fetch_page(url: str, rate_limit_seconds: float = 1.0) -> dict[str, Any]:
     if url.startswith("demo://"):
+        content = sanitize_content_for_llm(f"Demo page content for {url}")
         return {
             "url": url,
             "status_code": 200,
-            "content": f"Demo page content for {url}",
+            "content": content,
+            "content_sanitized": True,
             "ok": True,
             "source": "demo",
         }
@@ -65,16 +103,20 @@ def fetch_page(url: str, rate_limit_seconds: float = 1.0) -> dict[str, Any]:
     try:
         with httpx.Client(timeout=20.0, follow_redirects=True) as client:
             response = client.get(url, headers={"User-Agent": "EduPathBot/1.0 (respectful research agent)"})
+            content = sanitize_content_for_llm(response.text)
             return {
                 "url": url,
                 "status_code": response.status_code,
-                "content": response.text[:50000],
+                "content": content,
+                "links": extract_links(response.text, str(response.url)),
+                "content_sanitized": True,
+                "original_content_length": len(response.text),
                 "ok": response.is_success,
                 "source": "live",
             }
     except Exception as exc:  # noqa: BLE001
         logger.warning("fetch_page failed for %s: %s", url, exc)
-        return {"url": url, "ok": False, "error": str(exc), "status_code": 0}
+        return {"url": url, "ok": False, "error": str(exc), "status_code": 0, "links": []}
 
 
 def extract_links(html: str, base_url: str) -> list[str]:

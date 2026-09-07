@@ -61,7 +61,7 @@ export default function DashboardPage() {
     <>
       <PageHeader
         title={`Good day, ${stats?.student_name || "Scholar"}`}
-        subtitle="EduPath is searching official Indian scholarship portals and ranking matches for you."
+        subtitle="EduPath refreshes current listings from official Indian scholarship portals and ranks them for you."
         action={
           <div className="flex flex-wrap gap-2">
             <Button onClick={() => runDiscover(false)} loading={discovering}>

@@ -292,6 +292,12 @@ class CareerRoadmapOut(BaseModel):
     years: list[dict[str, Any]]
     linked_opportunity_ids: list[str]
     summary: str
+    resume_analyzed: bool = False
+    resume_file_name: Optional[str] = None
+    current_strengths: list[str] = Field(default_factory=list)
+    skill_gaps: list[dict[str, Any]] = Field(default_factory=list)
+    action_plan: list[dict[str, Any]] = Field(default_factory=list)
+    weekly_routine: list[str] = Field(default_factory=list)
 
 
 class DiscoverResponse(BaseModel):

@@ -1,6 +1,7 @@
+import logging
 from datetime import date
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.agents.eligibility_agent import EligibilityAgent
@@ -10,7 +11,7 @@ from app.agents.ranking_agent import RankingAgent
 from app.agents.career_agent import CareerRecommendationAgent
 from app.api.deps import get_current_user
 from app.config import get_settings
-from app.database import get_db
+from app.database import SessionLocal, get_db
 from app.models import Application, Document, Opportunity, StudentOpportunityMatch, StudentProfile, User
 from app.schemas.common import (
     CalendarEvent,
@@ -27,6 +28,7 @@ from app.services.opportunity_status import active_opportunities_query, is_recom
 from app.utils.ids import new_id
 
 router = APIRouter()
+logger = logging.getLogger("edupath")
 
 REQUIRED_PROFILE_FIELDS = ("degree", "field_of_study", "education_level", "country", "state")
 RECOMMENDED_DOCS = [
@@ -65,11 +67,21 @@ def _onboarding_status(db: Session, user: User, profile: StudentProfile | None) 
 def dashboard(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     profile = db.query(StudentProfile).filter(StudentProfile.user_id == user.id).first()
     matches = db.query(StudentOpportunityMatch).filter(StudentOpportunityMatch.student_id == user.id).all()
+    recommendable_matches = [
+        match
+        for match in matches
+        if match.opportunity and is_recommendable(match.opportunity)
+    ]
     apps = db.query(Application).filter(Application.student_id == user.id).all()
     docs_count = db.query(Document).filter(Document.student_id == user.id).count()
     return DashboardStats(
-        opportunities_found=len(matches) or db.query(Opportunity).count(),
-        strong_matches=sum(1 for m in matches if m.ranking_score >= 80),
+        opportunities_found=len(recommendable_matches),
+        strong_matches=sum(
+            1
+            for match in recommendable_matches
+            if match.ranking_score >= 80
+            and match.eligibility_status in {"ELIGIBLE", "PARTIALLY_ELIGIBLE"}
+        ),
         applications=len(apps),
         under_review=sum(1 for a in apps if a.status in {"UNDER_REVIEW", "DOCUMENT_VERIFICATION", "INTERVIEW"}),
         approved=sum(1 for a in apps if a.status in {"APPROVED", "DISBURSED"}),
@@ -90,8 +102,26 @@ def onboarding_status(user: User = Depends(get_current_user), db: Session = Depe
     return _onboarding_status(db, user, profile)
 
 
+def _discover_after_onboarding(student_id: str) -> None:
+    discovery_db = SessionLocal()
+    try:
+        OrchestratorAgent().run_discovery_workflow(
+            discovery_db,
+            student_id,
+            include_new_demo_opportunity=False,
+        )
+    except Exception:
+        logger.exception("Background scholarship discovery failed for student %s", student_id)
+    finally:
+        discovery_db.close()
+
+
 @router.post("/onboarding/complete")
-def complete_onboarding(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+def complete_onboarding(
+    background_tasks: BackgroundTasks,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
     profile = db.query(StudentProfile).filter(StudentProfile.user_id == user.id).first()
     if not profile:
         raise HTTPException(status_code=404, detail="Profile not found")
@@ -100,12 +130,11 @@ def complete_onboarding(user: User = Depends(get_current_user), db: Session = De
         raise HTTPException(status_code=400, detail="Complete your profile first")
     if not status.documents_uploaded:
         raise HTTPException(status_code=400, detail="Upload at least one document first")
-    # Run India discovery as part of finishing onboarding
-    OrchestratorAgent().run_discovery_workflow(db, user.id, include_new_demo_opportunity=False)
     profile = db.query(StudentProfile).filter(StudentProfile.user_id == user.id).first()
     profile.onboarding_completed = True
     db.add(profile)
     db.commit()
+    background_tasks.add_task(_discover_after_onboarding, user.id)
     return {"ok": True, "onboarding_completed": True}
 
 

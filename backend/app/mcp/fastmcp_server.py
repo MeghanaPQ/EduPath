@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import json
 import sys
-from typing import Any
+from typing import Any, TextIO
 
 
 def _build_stdio_handlers() -> dict[str, Any]:
@@ -30,55 +30,57 @@ def _build_stdio_handlers() -> dict[str, Any]:
     return {"db": db, "server": server}
 
 
+def run_stdio_bridge(
+    context: dict[str, Any],
+    input_stream: TextIO = sys.stdin,
+    output_stream: TextIO = sys.stdout,
+) -> None:
+    """Serve the minimal JSON stdio protocol used when FastMCP is unavailable."""
+    server = context["server"]
+
+    def write(payload: dict[str, Any]) -> None:
+        output_stream.write(json.dumps(payload, default=str) + "\n")
+        output_stream.flush()
+
+    write(
+        {
+            "info": "FastMCP package not installed; using EduPath MCPToolServer stdio bridge",
+            "protocol": "edupath-mcp/1.0",
+        }
+    )
+    write({"tools": server.list_tools()})
+    for line in input_stream:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            req = json.loads(line)
+        except json.JSONDecodeError:
+            write({"ok": False, "error": "invalid json"})
+            continue
+        method = req.get("method")
+        if method == "tools/list":
+            write({"tools": server.list_tools()})
+        elif method == "tools/call":
+            params = req.get("params") or {}
+            result = server.call_tool(params.get("name"), params.get("arguments") or {})
+            write({"ok": result.ok, "content": result.content, "error": result.error})
+        elif method in {"shutdown", "exit"}:
+            return
+        else:
+            write({"ok": False, "error": f"unknown method {method}"})
+
+
 def main() -> None:
     try:
         from mcp.server.fastmcp import FastMCP  # type: ignore
     except Exception:
         # Fallback: JSON-RPC-ish stdio loop over in-process MCPToolServer
-        print(
-            json.dumps(
-                {
-                    "info": "FastMCP package not installed; using EduPath MCPToolServer stdio bridge",
-                    "protocol": "edupath-mcp/1.0",
-                }
-            ),
-            flush=True,
-        )
         ctx = _build_stdio_handlers()
-        server = ctx["server"]
-        print(json.dumps({"tools": server.list_tools()}), flush=True)
-        for line in sys.stdin:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                req = json.loads(line)
-            except json.JSONDecodeError:
-                print(json.dumps({"ok": False, "error": "invalid json"}), flush=True)
-                continue
-            method = req.get("method")
-            if method == "tools/list":
-                print(json.dumps({"tools": server.list_tools()}), flush=True)
-            elif method == "tools/call":
-                name = (req.get("params") or {}).get("name")
-                args = (req.get("params") or {}).get("arguments") or {}
-                result = server.call_tool(name, args)
-                print(
-                    json.dumps(
-                        {
-                            "ok": result.ok,
-                            "content": result.content,
-                            "error": result.error,
-                        },
-                        default=str,
-                    ),
-                    flush=True,
-                )
-            elif method in {"shutdown", "exit"}:
-                break
-            else:
-                print(json.dumps({"ok": False, "error": f"unknown method {method}"}), flush=True)
-        ctx["db"].close()
+        try:
+            run_stdio_bridge(ctx)
+        finally:
+            ctx["db"].close()
         return
 
     mcp = FastMCP("edupath-scholarship-mcp")

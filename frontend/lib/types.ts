@@ -192,6 +192,22 @@ export interface CareerRoadmap {
   }>;
   linked_opportunity_ids: string[];
   summary: string;
+  resume_analyzed?: boolean;
+  resume_file_name?: string | null;
+  current_strengths?: string[];
+  skill_gaps?: Array<{
+    skill: string;
+    priority?: string;
+    why?: string;
+    how_to_learn?: string;
+  }>;
+  action_plan?: Array<{
+    title: string;
+    timeframe?: string;
+    actions?: string[];
+    proof?: string;
+  }>;
+  weekly_routine?: string[];
 }
 
 export interface ChatResponse {

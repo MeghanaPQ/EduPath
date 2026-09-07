@@ -7,15 +7,40 @@ import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 
 export default function LoginPage() {
-  const { requestCode, verifyCode, loading } = useAuth();
+  const { requestCode, verifyCode, login, register, loading } = useAuth();
+  const [mode, setMode] = useState<"login" | "signup" | "code">("login");
   const [step, setStep] = useState<"email" | "code">("email");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [code, setCode] = useState("");
   const [devCode, setDevCode] = useState<string | null>(null);
   const [info, setInfo] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  const submitPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setInfo("");
+    if (mode === "signup" && password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      if (mode === "signup") {
+        await register(name.trim(), email.trim(), password);
+      } else {
+        await login(email.trim(), password);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : mode === "signup" ? "Could not create account" : "Could not log in");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const sendCode = async (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -78,11 +103,11 @@ export default function LoginPage() {
             India scholarships, discovered for you
           </h1>
           <p className="text-ocean-200 text-lg max-w-md leading-relaxed">
-            Automatic email login for every student: we send a code, you enter it, you&apos;re in. No password.
+            Create your student account, save your profile, and discover scholarships matched to you.
           </p>
           <div className="mt-12 flex items-center gap-3">
             <Sparkles className="w-5 h-5 text-gold-400" />
-            <span className="text-ocean-200 text-sm">Email code login · Official sources only</span>
+            <span className="text-ocean-200 text-sm">Password login · Official sources only</span>
           </div>
         </div>
       </div>
@@ -97,16 +122,66 @@ export default function LoginPage() {
           </div>
 
           <div className="rounded-2xl border border-ocean-100 bg-white/80 backdrop-blur-sm p-8 shadow-xl shadow-ocean-900/5">
+            <div className="flex rounded-xl bg-ocean-50 p-1 mb-6">
+              <button
+                type="button"
+                className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${mode === "login" ? "bg-white text-ocean-900 shadow-sm" : "text-ocean-500"}`}
+                onClick={() => { setMode("login"); setError(""); setInfo(""); }}
+              >
+                Log in
+              </button>
+              <button
+                type="button"
+                className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${mode === "signup" ? "bg-white text-ocean-900 shadow-sm" : "text-ocean-500"}`}
+                onClick={() => { setMode("signup"); setError(""); setInfo(""); }}
+              >
+                Sign up
+              </button>
+            </div>
             <h2 className="font-display text-2xl font-semibold text-ocean-950 mb-1">
-              {step === "email" ? "Sign in or create account" : "Enter your code"}
+              {mode === "code" ? "Enter your code" : mode === "signup" ? "Create your account" : "Welcome back"}
             </h2>
             <p className="text-sm text-ocean-600 mb-6">
-              {step === "email"
-                ? "1) Enter email → 2) We send a code automatically → 3) Enter code to log in."
+              {mode !== "code"
+                ? mode === "signup" ? "Create an account with your name, email, and password." : "Log in with the email and password you used to register."
                 : `Code sent to ${email}. Enter it to finish login.`}
             </p>
 
-            {step === "email" ? (
+            {mode !== "code" ? (
+              <form onSubmit={submitPassword} className="space-y-4">
+                {mode === "signup" && (
+                  <div>
+                    <Label htmlFor="name">Full name</Label>
+                    <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required placeholder="Your full name" />
+                  </div>
+                )}
+                <div>
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="you@email.com" />
+                </div>
+                <div>
+                  <Label htmlFor="password">Password</Label>
+                  <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} placeholder="At least 6 characters" />
+                </div>
+                {mode === "signup" && (
+                  <div>
+                    <Label htmlFor="confirm-password">Confirm password</Label>
+                    <Input id="confirm-password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required minLength={6} placeholder="Enter password again" />
+                  </div>
+                )}
+                {error && <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>}
+                <Button type="submit" className="w-full" loading={submitting}>
+                  {mode === "signup" ? "Create account" : "Log in"}
+                </Button>
+                <button
+                  type="button"
+                  className="w-full text-sm text-ocean-500"
+                  onClick={() => { setMode("code"); setStep("email"); setError(""); setInfo(""); }}
+                >
+                  Use email code instead
+                </button>
+              </form>
+            ) : step === "email" ? (
               <form onSubmit={sendCode} className="space-y-4">
                 <div>
                   <Label htmlFor="name">Full name</Label>
@@ -141,6 +216,13 @@ export default function LoginPage() {
                 <Button type="submit" className="w-full" loading={submitting}>
                   Continue — send my code
                 </Button>
+                <button
+                  type="button"
+                  className="w-full text-sm text-ocean-500"
+                  onClick={() => { setMode("login"); setError(""); setInfo(""); }}
+                >
+                  Back to password login
+                </button>
               </form>
             ) : (
               <form onSubmit={confirmCode} className="space-y-4">

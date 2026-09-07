@@ -121,7 +121,7 @@ export default function OnboardingPage() {
       setError(
         err instanceof Error
           ? err.message
-          : "Upload failed — every document must match your profile (name, college, category, state)."
+          : "Upload failed — check the file type and your profile details, then try again."
       );
     } finally {
       setBusy(false);

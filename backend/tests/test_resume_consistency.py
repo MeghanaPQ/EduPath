@@ -58,7 +58,7 @@ def test_accept_matching_resume():
     assert result["blocked"] is False
 
 
-def test_reject_wrong_person_aadhaar():
+def test_accept_document_with_different_name():
     user = _User("Sreeteja Reddy", "sreeteja@example.com")
     profile = _Profile("Parul University", "B.Tech", state="Gujarat")
     foreign = """
@@ -70,7 +70,7 @@ def test_reject_wrong_person_aadhaar():
     result = check_document_profile_consistency(
         user=user, profile=profile, document_type="aadhaar", document_text=foreign
     )
-    assert result["blocked"] is True
+    assert result["blocked"] is False
 
 
 def test_reject_wrong_category_certificate():

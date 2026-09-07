@@ -14,8 +14,9 @@ from app.agents.eligibility_agent import EligibilityAgent
 from app.agents.ranking_agent import RankingAgent
 from app.agents.status_agent import ApplicationStatusAgent
 from app.config import get_settings
-from app.models import Notification, Opportunity, StudentOpportunityMatch, StudentProfile, User
+from app.models import Document, Notification, Opportunity, StudentOpportunityMatch, StudentProfile, User
 from app.services import agent_logger
+from app.services.llm import llm_service
 from app.services.opportunity_status import is_recommendable
 from app.utils.ids import new_id
 
@@ -223,6 +224,8 @@ class OrchestratorAgent:
             steps.append({"message": f"Found {strong} strong matches", "status": "completed"})
             if notifications:
                 steps.append({"message": f"Generated {notifications} notifications", "status": "completed"})
+            model_step = self._apply_model_recommendations(db, profile)
+            steps.append(model_step)
             return {
                 **state,
                 "evaluated": evaluated,
@@ -342,6 +345,7 @@ class OrchestratorAgent:
                 "status": "completed",
             }
         )
+        steps.append(self._apply_model_recommendations(db, profile))
         return {
             **state,
             "discovered_ids": [o["id"] for o in result["opportunities"]],
@@ -353,6 +357,97 @@ class OrchestratorAgent:
                 "sources_scanned": result["sources_scanned"],
                 "duplicates": result["duplicates"],
             },
+        }
+
+    def _apply_model_recommendations(self, db: Session, profile: StudentProfile) -> dict[str, Any]:
+        matches = (
+            db.query(StudentOpportunityMatch)
+            .filter(StudentOpportunityMatch.student_id == profile.user_id)
+            .all()
+        )
+        if not matches:
+            return {"message": "No matches available for model recommendation", "status": "skipped"}
+        if not llm_service.available:
+            return {"message": "Model unavailable; kept deterministic recommendations", "status": "skipped"}
+
+        documents = db.query(Document).filter(Document.student_id == profile.user_id).all()
+        document_types = sorted({document.document_type for document in documents})
+        document_evidence = [
+            {
+                "type": document.document_type,
+                "fields_found": (document.metadata_json or {}).get("insights", {}).get("fields_found", {}),
+            }
+            for document in documents
+        ]
+        candidates = []
+        for match in matches:
+            opportunity = db.query(Opportunity).filter(Opportunity.id == match.opportunity_id).first()
+            if not opportunity or match.eligibility_status == "NOT_ELIGIBLE":
+                continue
+            candidates.append(
+                {
+                    "opportunity_id": opportunity.id,
+                    "title": opportunity.title,
+                    "description": opportunity.description or "",
+                    "deadline": opportunity.deadline.isoformat() if opportunity.deadline else None,
+                    "deterministic_score": match.ranking_score,
+                    "eligibility_status": match.eligibility_status,
+                    "missing_documents": match.missing_requirements or [],
+                }
+            )
+        if not candidates:
+            return {"message": "No eligible matches available for model recommendation", "status": "skipped"}
+
+        result = llm_service.complete_json(
+            prompt=(
+                "Recommend and rank only from these candidate opportunity IDs. "
+                "Return JSON exactly as {\"recommendations\":[{\"opportunity_id\":\"...\","
+                "\"score\":0,\"reason\":\"...\"}]}. Do not invent IDs or facts. "
+                f"Student profile: degree={profile.degree}; field={profile.field_of_study}; "
+                f"education_level={profile.education_level}; state={profile.state}; category={profile.category}; "
+                f"income={profile.family_income}; skills={profile.skills}; interests={profile.interests}; "
+                f"career_goals={profile.career_goals}; uploaded_document_types={document_types}. "
+                f"Uploaded document evidence: {document_evidence}. "
+                f"Candidates: {candidates[:20]}"
+            ),
+            system="You are EduPath's scholarship recommendation model. Personalize from the supplied facts only.",
+        )
+        recommendations = result.get("recommendations")
+        if not isinstance(recommendations, list):
+            return {"message": "Model returned no usable recommendations; kept deterministic results", "status": "warning"}
+
+        candidate_by_id = {candidate["opportunity_id"]: candidate for candidate in candidates}
+        updated = 0
+        for recommendation in recommendations:
+            if not isinstance(recommendation, dict):
+                continue
+            opportunity_id = recommendation.get("opportunity_id")
+            candidate = candidate_by_id.get(opportunity_id)
+            if not candidate:
+                continue
+            model_score = recommendation.get("score")
+            if not isinstance(model_score, (int, float)):
+                continue
+            match = next((item for item in matches if item.opportunity_id == opportunity_id), None)
+            if not match:
+                continue
+            model_score = max(0.0, min(100.0, float(model_score)))
+            deterministic_score = float(candidate["deterministic_score"] or 0)
+            match.ranking_score = round(0.65 * deterministic_score + 0.35 * model_score, 1)
+            breakdown = dict(match.score_breakdown or {})
+            breakdown["model_recommendation"] = {
+                "score": model_score,
+                "reason": str(recommendation.get("reason") or "Profile and document fit considered."),
+                "provider": llm_service.settings.llm_model,
+            }
+            match.score_breakdown = breakdown
+            match.reasoning = f"{match.reasoning} Model recommendation: {breakdown['model_recommendation']['reason']}"
+            db.add(match)
+            updated += 1
+        db.commit()
+        return {
+            "message": f"Model personalized {updated} recommendations using profile and uploaded documents",
+            "status": "completed" if updated else "warning",
         }
 
     def _maybe_notify(

@@ -6,6 +6,7 @@ from typing import Any, Optional
 from pydantic import BaseModel, Field
 
 from app.services.llm import llm_service
+from app.tools.discovery_tools import sanitize_content_for_llm
 
 
 class ExtractedEligibility(BaseModel):
@@ -61,6 +62,7 @@ class ExtractionAgent:
         # Without a structured seed, only extract conservatively from page content.
         # If LLM is available, ask it to extract ONLY facts present in the text.
         if llm_service.available and content:
+            content = sanitize_content_for_llm(content)
             result = llm_service.complete_json(
                 prompt=(
                     "Extract scholarship/opportunity fields ONLY if explicitly present in the content. "

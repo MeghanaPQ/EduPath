@@ -69,7 +69,7 @@ async def upload_document(
     text = agent.extract_text_from_file(str(dest))
     profile = db.query(StudentProfile).filter(StudentProfile.user_id == user.id).first()
 
-    # Every upload is checked against the logged-in student's profile identity
+    # Uploads are checked against profile details when those details are present.
     consistency = check_document_profile_consistency(
         user=user,
         profile=profile,
