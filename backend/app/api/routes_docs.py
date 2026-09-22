@@ -35,7 +35,7 @@ ALLOWED_TYPES = {
     "research_proposal",
     "other",
 }
-ALLOWED_EXT = {".pdf", ".docx", ".txt", ".md"}
+ALLOWED_EXT = {".pdf", ".docx", ".txt", ".md", ".png", ".jpg", ".jpeg", ".webp", ".tif", ".tiff", ".bmp"}
 
 
 @router.get("/documents", response_model=list[DocumentOut])

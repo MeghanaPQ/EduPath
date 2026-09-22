@@ -31,6 +31,7 @@ export default function CareerRoadmapPage() {
         : [],
   }));
   const routine = roadmap.weekly_routine || [];
+  const years = Array.isArray(roadmap.years) ? roadmap.years : [];
 
   return (
     <>
@@ -101,7 +102,7 @@ export default function CareerRoadmapPage() {
         <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-ocean-400 via-gold-400 to-sand-300 hidden sm:block" />
 
         <div className="space-y-8">
-          {roadmap.years.map((year, i) => (
+          {years.map((year, i) => (
             <div key={i} className="relative sm:pl-16 animate-slide-up" style={{ animationDelay: `${i * 100}ms` }}>
               <div className="hidden sm:flex absolute left-4 top-6 w-5 h-5 rounded-full bg-ocean-700 border-4 border-sand-50 items-center justify-center">
                 <div className="w-2 h-2 rounded-full bg-gold-400" />
@@ -121,7 +122,7 @@ export default function CareerRoadmapPage() {
                     <div>
                       <h4 className="text-sm font-medium text-ocean-800 mb-2">Milestones</h4>
                       <ul className="space-y-2">
-                        {(year.milestones || []).map((m, j) => (
+                        {(Array.isArray(year.milestones) ? year.milestones : []).map((m, j) => (
                             <li key={j} className="text-sm text-ocean-700 flex gap-2">
                               <span className="text-gold-500 shrink-0">◆</span>
                             {m}
@@ -132,7 +133,7 @@ export default function CareerRoadmapPage() {
                     <div>
                       <h4 className="text-sm font-medium text-ocean-800 mb-2">Skills to Develop</h4>
                       <div className="flex flex-wrap gap-2">
-                        {(year.skills_to_develop || []).map((s, j) => (
+                        {(Array.isArray(year.skills_to_develop) ? year.skills_to_develop : []).map((s, j) => (
                           <Badge key={j} variant="ocean" className="normal-case tracking-normal">
                             {s}
                           </Badge>

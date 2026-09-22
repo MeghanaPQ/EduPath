@@ -144,7 +144,7 @@ export default function DocumentsPage() {
         ref={fileRef}
         type="file"
         className="hidden"
-        accept=".pdf,.docx,.txt,.md"
+        accept=".pdf,.docx,.txt,.md,.png,.jpg,.jpeg,.webp,.tif,.tiff,.bmp"
         onChange={(e) => {
           const file = e.target.files?.[0];
           if (file) upload(file);

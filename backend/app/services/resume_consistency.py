@@ -329,7 +329,7 @@ def check_document_profile_consistency(
 
     # --- DEGREE / EDUCATION LEVEL ---
     doc_deg = extracted.get("degree") or ""
-    if degree and doc_deg:
+    if degree and doc_deg and dtype in {"transcript", "resume", "admission_letter", "bonafide_certificate"}:
         if (
             _education_level(degree)
             and _education_level(doc_deg)
@@ -364,10 +364,15 @@ def check_document_profile_consistency(
 
     # --- STATE ---
     doc_state = (extracted.get("state") or "").strip()
-    if state and doc_state and dtype in {"aadhaar", "income_certificate", "caste_certificate", "domicile"}:
+    if state and doc_state and dtype in {"income_certificate", "caste_certificate", "domicile"}:
         if _normalize(state) != _normalize(doc_state) and _normalize(state) not in _normalize(doc_state):
             mismatches.append(
                 f"State on document “{doc_state}” does not match your profile state “{state}”."
+            )
+    elif state and doc_state and dtype == "aadhaar":
+        if _normalize(state) != _normalize(doc_state) and _normalize(state) not in _normalize(doc_state):
+            warnings.append(
+                f"Aadhaar address state “{doc_state}” differs from your profile state “{state}”; review it if needed."
             )
 
     ok = len(mismatches) == 0

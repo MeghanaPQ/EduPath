@@ -122,7 +122,7 @@ docker compose up db -d
 # set DATABASE_URL=postgresql+psycopg://edupath:edupath@localhost:5432/edupath
 ```
 
-Tables and seed data are created automatically on backend startup.
+Tables are created automatically on backend startup.
 
 ## Running the backend
 

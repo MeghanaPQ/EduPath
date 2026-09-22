@@ -3,6 +3,7 @@ from app.services.resume_consistency import (
     check_resume_profile_consistency,
     extract_resume_identity,
 )
+from app.agents.document_agent import DocumentAgent
 
 
 class _User:
@@ -73,6 +74,26 @@ def test_accept_document_with_different_name():
     assert result["blocked"] is False
 
 
+def test_aadhaar_ignores_education_and_warns_on_address_state_difference():
+    user = _User("Sreeteja Reddy", "sreeteja@example.com")
+    profile = _Profile("Parul University", "B.Tech", state="Gujarat")
+    aadhaar_text = """
+    Government of India
+    Aadhaar
+    Name: Sreeteja Reddy
+    Education: B.E. / B.Tech
+    Address: Andhra Pradesh
+    """
+
+    result = check_document_profile_consistency(
+        user=user, profile=profile, document_type="aadhaar", document_text=aadhaar_text
+    )
+
+    assert result["blocked"] is False
+    assert result["warnings"]
+    assert not result["mismatches"]
+
+
 def test_reject_wrong_category_certificate():
     user = _User("Sreeteja Reddy", "sreeteja@example.com")
     profile = _Profile("Parul University", "B.Tech", category="SC", state="Gujarat")
@@ -110,3 +131,13 @@ def test_reject_unreadable_identity_scan():
         user=user, profile=profile, document_type="aadhaar", document_text=""
     )
     assert result["blocked"] is True
+
+
+def test_image_document_uses_ocr(monkeypatch, tmp_path):
+    image_path = tmp_path / "aadhaar.png"
+    image_path.write_bytes(b"image")
+    monkeypatch.setattr(DocumentAgent, "_ocr_image", lambda self, path: "Name: Sreeteja Reddy\nCategory: OBC")
+
+    extracted = DocumentAgent().extract_text_from_file(str(image_path))
+
+    assert "Category: OBC" in extracted

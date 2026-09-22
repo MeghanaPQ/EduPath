@@ -5,7 +5,6 @@ import logging
 import re
 import time
 from html.parser import HTMLParser
-from pathlib import Path
 from typing import Any, Optional
 from urllib.parse import urlparse
 from urllib.robotparser import RobotFileParser
@@ -20,6 +19,31 @@ from app.utils.ids import new_id
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
+
+TRUSTED_SOURCES = (
+    ("National Scholarship Portal (NSP)", "https://scholarships.gov.in/", "government"),
+    ("UGC Scholarships & Fellowships", "https://www.ugc.gov.in/", "government"),
+    ("AICTE Student Development Schemes", "https://www.aicte-india.org/schemes/students-development-schemes", "government"),
+    ("INSPIRE / DST Online Portal", "https://www.online-inspire.gov.in/", "research"),
+    ("Prime Minister's Research Fellowship (PMRF)", "https://www.pmrf.in/", "research"),
+    ("CSIR Human Resource Development Group", "https://csirhrdg.res.in/", "research"),
+    ("USIEF Fulbright-Nehru", "https://www.usief.org.in/", "international"),
+    ("Reliance Foundation Education", "https://www.reliancefoundation.org/education", "foundation"),
+    ("Tata Trusts Individual Grants", "https://www.tatatrusts.org/our-work/individual-grants-programmes", "foundation"),
+    ("JN Tata Endowment", "https://jntataendowment.org/", "foundation"),
+    ("Inlaks Shivdasani Foundation", "https://www.inlaksfoundation.org/", "foundation"),
+    ("Chevening Scholarships", "https://www.chevening.org/apply/", "international"),
+    ("Digital Gujarat", "https://www.digitalgujarat.gov.in/", "government"),
+    ("MYSY Gujarat", "https://mysy.guj.nic.in/", "government"),
+    ("MahaDBT Maharashtra", "https://mahadbt.maharashtra.gov.in/", "government"),
+    ("e-Grantz Kerala", "https://www.egrantz.kerala.gov.in/", "government"),
+    ("Telangana ePASS", "https://telanganaepass.cgg.gov.in/", "government"),
+    ("Jnanabhumi Andhra Pradesh", "https://jnanabhumi.ap.gov.in/", "government"),
+    ("SSP Karnataka", "https://ssp.postmatric.karnataka.gov.in/", "government"),
+    ("UP Scholarship", "https://scholarship.up.gov.in/", "government"),
+    ("MP Scholarship Portal", "https://scholarshipportal.mp.nic.in/", "government"),
+    ("OASIS West Bengal", "https://oasis.gov.in/", "government"),
+)
 
 
 class _VisibleTextParser(HTMLParser):
@@ -57,16 +81,10 @@ def sanitize_content_for_llm(content: str, max_length: int = 8_000) -> str:
 
 
 def load_trusted_sources() -> list[dict[str, Any]]:
-    path = DATA_DIR / "trusted_sources.json"
-    with path.open(encoding="utf-8") as f:
-        sources = json.load(f)
-    return [s for s in sources if s.get("enabled", True)]
-
-
-def load_seed_opportunities() -> list[dict[str, Any]]:
-    path = DATA_DIR / "seed_opportunities.json"
-    with path.open(encoding="utf-8") as f:
-        return json.load(f)
+    return [
+        {"name": name, "url": url, "type": source_type, "country": "IN", "enabled": True}
+        for name, url, source_type in TRUSTED_SOURCES
+    ]
 
 
 def robots_allows(url: str, user_agent: str = "EduPathBot") -> bool:

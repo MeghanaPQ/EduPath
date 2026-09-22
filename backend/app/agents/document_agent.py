@@ -18,9 +18,20 @@ class DocumentAgent:
                 from pypdf import PdfReader
 
                 reader = PdfReader(str(path))
-                return "\n".join(page.extract_text() or "" for page in reader.pages)
+                text = "\n".join(page.extract_text() or "" for page in reader.pages).strip()
+                if text:
+                    return text
+                return self._ocr_pdf(path)
             except Exception as exc:  # noqa: BLE001
-                return f"[PDF parse failed: {exc}]"
+                try:
+                    return self._ocr_pdf(path)
+                except Exception as ocr_exc:  # noqa: BLE001
+                    return f"[PDF OCR failed: {ocr_exc}]"
+        if suffix in {".png", ".jpg", ".jpeg", ".webp", ".tif", ".tiff", ".bmp"}:
+            try:
+                return self._ocr_image(path)
+            except Exception as exc:  # noqa: BLE001
+                return f"[Image OCR failed: {exc}]"
         if suffix in {".docx"}:
             try:
                 import docx
@@ -33,6 +44,45 @@ class DocumentAgent:
             return path.read_text(encoding="utf-8", errors="ignore")
         return ""
 
+    def _ocr_image(self, path: Path) -> str:
+        try:
+            import pytesseract
+            from PIL import Image, ImageOps
+        except ImportError as exc:
+            raise RuntimeError("OCR dependencies are not installed") from exc
+
+        if not pytesseract.pytesseract.tesseract_cmd or pytesseract.pytesseract.tesseract_cmd == "tesseract":
+            for executable in (
+                Path("C:/Program Files/Tesseract-OCR/tesseract.exe"),
+                Path("C:/Program Files (x86)/Tesseract-OCR/tesseract.exe"),
+            ):
+                if executable.exists():
+                    pytesseract.pytesseract.tesseract_cmd = str(executable)
+                    break
+
+        with Image.open(path) as image:
+            prepared = ImageOps.exif_transpose(image).convert("RGB")
+            text = pytesseract.image_to_string(prepared, config="--psm 6")
+        return text.strip()
+
+    def _ocr_pdf(self, path: Path) -> str:
+        try:
+            import fitz
+        except ImportError as exc:
+            raise RuntimeError("PDF OCR dependencies are not installed") from exc
+
+        texts: list[str] = []
+        with fitz.open(path) as document:
+            for page in document:
+                pixmap = page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
+                image_path = path.with_name(f".{path.stem}-{page.number}.png")
+                try:
+                    pixmap.save(image_path)
+                    texts.append(self._ocr_image(image_path))
+                finally:
+                    image_path.unlink(missing_ok=True)
+        return "\n".join(text for text in texts if text).strip()
+
     def analyze_resume(self, resume_text: str, opportunity_title: str, opportunity_description: str) -> dict[str, Any]:
         if not resume_text.strip():
             return {
@@ -43,7 +93,6 @@ class DocumentAgent:
                 "suggestions": ["Upload a PDF/DOCX resume or paste text."],
                 "disclaimer": "AI analysis is advisory. Do not fabricate experience.",
             }
-
         # Deterministic keyword scoring + optional LLM enrichment
         text = resume_text.lower()
         tech_keywords = ["python", "sql", "machine learning", "tensorflow", "pytorch", "nlp", "deep learning"]

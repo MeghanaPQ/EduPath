@@ -106,3 +106,9 @@ def test_production_requires_email_delivery(monkeypatch):
         assert "SMTP" in (result.get("message") or "") or "RESEND" in (result.get("message") or "")
     finally:
         db.close()
+
+
+def test_default_cors_allows_frontend_port_3001():
+    get_settings.cache_clear()
+    settings = get_settings()
+    assert "http://localhost:3001" in settings.origins

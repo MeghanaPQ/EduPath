@@ -9,22 +9,12 @@ from app.agents.status_agent import ApplicationStatusAgent
 from app.tools.discovery_tools import check_duplicate
 
 
-def test_extraction_from_seed():
-    seed = {
-        "title": "AI Research Fellowship",
-        "provider": "Northstar",
-        "opportunity_type": "fellowship",
-        "amount": 10000,
-        "deadline": "2026-09-20",
-        "required_documents": ["resume"],
-        "official_source_url": "demo://x",
-        "application_url": "demo://x/apply",
-        "eligibility": {"minimum_gpa": 3.5},
-        "source_verified": False,
-    }
-    extracted = ExtractionAgent().extract("demo://x", "content", seed=seed)
-    assert extracted.title == "AI Research Fellowship"
-    assert extracted.amount == 10000
+def test_extraction_keeps_live_page_when_detailed_extraction_is_unavailable():
+    extracted = ExtractionAgent().extract("https://www.example.org/current-scholarships", "")
+
+    assert extracted.title == "Current Scholarships"
+    assert extracted.provider == "example.org"
+    assert extracted.verification_status == "Pending"
 
 
 def test_missing_deadline_parse():

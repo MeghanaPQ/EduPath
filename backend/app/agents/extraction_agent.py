@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from datetime import date, datetime
-from typing import Any, Optional
+from typing import Optional
+from urllib.parse import urlparse
 
 from pydantic import BaseModel, Field
 
@@ -40,26 +41,8 @@ class ExtractedOpportunity(BaseModel):
 class ExtractionAgent:
     """Extract structured opportunity info. Never invent official URLs or amounts."""
 
-    def extract(self, url: str, content: str, seed: Optional[dict[str, Any]] = None) -> ExtractedOpportunity:
-        if seed:
-            eligibility = seed.get("eligibility") or {}
-            return ExtractedOpportunity(
-                title=seed["title"],
-                provider=seed["provider"],
-                type=seed.get("opportunity_type") or seed.get("type") or "scholarship",
-                amount=seed.get("amount"),
-                currency=seed.get("currency") or "USD",
-                deadline=str(seed["deadline"]) if seed.get("deadline") else None,
-                eligibility=ExtractedEligibility(**eligibility),
-                required_documents=seed.get("required_documents") or [],
-                application_url=seed.get("application_url"),
-                official_source=seed.get("official_source_url") or url,
-                description=seed.get("description") or "",
-                location=seed.get("location"),
-                verification_status="Verified" if seed.get("source_verified") else "Unknown",
-            )
-
-        # Without a structured seed, only extract conservatively from page content.
+    def extract(self, url: str, content: str) -> ExtractedOpportunity:
+        # Only extract conservatively from page content.
         # If LLM is available, ask it to extract ONLY facts present in the text.
         if llm_service.available and content:
             content = sanitize_content_for_llm(content)
@@ -91,14 +74,18 @@ class ExtractionAgent:
                 except Exception:  # noqa: BLE001
                     pass
 
+        parsed_url = urlparse(url)
+        host = parsed_url.netloc.removeprefix("www.")
+        path = parsed_url.path.strip("/").replace("-", " ").replace("_", " ")
+        title = path.title() if path else f"Current Opportunities on {host}"
         return ExtractedOpportunity(
-            title="Unverified Opportunity Listing",
-            provider="Unknown",
+            title=title,
+            provider=host or "Unknown",
             type="scholarship",
             application_url=url,
             official_source=url,
-            description="Could not reliably extract structured fields from page content.",
-            verification_status="Unknown",
+            description="Live official source page. Detailed opportunity fields could not yet be extracted.",
+            verification_status="Pending",
         )
 
     @staticmethod

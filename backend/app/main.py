@@ -2,17 +2,18 @@ from __future__ import annotations
 
 import logging
 from contextlib import asynccontextmanager
+from datetime import date
 from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 
 from app.api import api_router
 from app.config import get_settings
 from app.database import Base, SessionLocal, engine
 from app.jobs.scheduler import start_scheduler
-from app.services.seed import seed_database
+from app.services.opportunity_status import close_expired_opportunities
 from app.utils.schema_migrate import ensure_schema
 
 logging.basicConfig(level=logging.INFO)
@@ -29,8 +30,8 @@ async def lifespan(app: FastAPI):
     get_settings.cache_clear()
     db = SessionLocal()
     try:
-        result = seed_database(db)
-        logger.info("Seed complete: %s", result)
+        closed_count = close_expired_opportunities(db, date.today())
+        logger.info("Closed %s expired opportunities", closed_count)
     finally:
         db.close()
     try:
@@ -45,7 +46,7 @@ app = FastAPI(title="EduPath AI", version="1.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.origins + ["http://127.0.0.1:3000"],
+    allow_origins=settings.origins + ["http://127.0.0.1:3000", "http://127.0.0.1:3001"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -61,6 +62,11 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 @app.get("/health")
 def health():
     return {"status": "ok", "demo_mode": settings.demo_mode}
+
+
+@app.get("/", include_in_schema=False)
+def frontend_redirect():
+    return RedirectResponse(url=settings.frontend_url)
 
 
 app.include_router(api_router)

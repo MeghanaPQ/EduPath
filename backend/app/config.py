@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     demo_mode: bool = False
     discovery_schedule: str = "0 8 * * *"
     upload_dir: str = str(ROOT_DIR / "uploads")
-    cors_origins: str = "http://localhost:3000"
+    cors_origins: str = "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001"
     notify_match_threshold: float = 80.0
 
     ranking_weight_eligibility: float = 0.35

@@ -58,8 +58,8 @@ Batch discovery remains a LangGraph/sequential pipeline (`load_sources → disco
 | --- | --- |
 | PolicyAgent | LLM-mediated decide/act/observe/finish over MCP tools |
 | ReflectionAgent | Verify final answer against tool observations |
-| DiscoveryAgent | Find candidate opportunities from trusted sources / demo catalog |
-| ExtractionAgent | Convert page/seed content into strict structured opportunity JSON |
+| DiscoveryAgent | Find candidate opportunities from trusted sources |
+| ExtractionAgent | Convert page content into strict structured opportunity JSON |
 | EligibilityAgent | Deterministic rules first, LLM only for ambiguous explanation |
 | RankingAgent | Weighted match score (not acceptance probability) |
 | ApplicationReadinessAgent | Compare required docs vs document vault |

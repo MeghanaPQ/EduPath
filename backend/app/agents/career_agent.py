@@ -148,6 +148,27 @@ class CareerRecommendationAgent:
         if isinstance(years_from_model, list) and years_from_model:
             years = years_from_model
 
+        normalized_years = []
+        for index, year_data in enumerate(years):
+            if not isinstance(year_data, dict):
+                continue
+            milestones = year_data.get("milestones")
+            if not isinstance(milestones, list):
+                milestones = year_data.get("items") if isinstance(year_data.get("items"), list) else []
+            skills_to_develop = year_data.get("skills_to_develop")
+            if not isinstance(skills_to_develop, list):
+                skills_to_develop = []
+            normalized_years.append(
+                {
+                    **year_data,
+                    "year": year_data.get("year", 2026 + index),
+                    "title": str(year_data.get("title") or f"Year {index + 1}"),
+                    "milestones": [str(item) for item in milestones],
+                    "skills_to_develop": [str(item) for item in skills_to_develop],
+                }
+            )
+        years = normalized_years
+
         return {
             "career_goal": career_goal,
             "years": years,
